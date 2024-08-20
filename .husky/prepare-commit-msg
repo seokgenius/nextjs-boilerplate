@@ -1,0 +1,80 @@
+#!/bin/sh
+#yorkie 2.0.0
+echo "🎉 Git Hooks 실행 🎉"
+command_exists () {
+  command -v "$1" >/dev/null 2>&1
+}
+has_hook_script () {
+  [ -f package.json ] && cat package.json | grep -q "\"$1\"[[:space:]]*:"
+}
+load_nvm () {
+  command_exists nvm || {
+    export NVM_DIR="$1"
+    [ -s "$1/nvm.sh" ] && . "$1/nvm.sh"
+  }
+}
+run_nvm () {
+  command_exists nvm && [ -f .nvmrc ] && nvm use
+}
+cd "."
+if [ -z "$BRANCHES_TO_SKIP" ]; then
+  BRANCHES_TO_SKIP=(master main develop release hotfix)
+fi
+COMMIT_EDITMSG_FILE_PATH=$1
+DEFAULT_COMMIT_MSG=$(cat $COMMIT_EDITMSG_FILE_PATH)
+CURRENT_ISSUE=$(git rev-parse --abbrev-ref HEAD)
+ISSUE_TICKET=$(echo "$CURRENT_ISSUE" | sed 's/.*\///')
+COMMIT_SOURCE=$2
+# 체리픽의 경우 "(cherry picked from commit ...)" 메시지가 포함되므로 이를 확인
+if echo "$DEFAULT_COMMIT_MSG" | grep -q "(cherry picked from commit"; then
+  exit 0
+fi
+# merge의 경우 템플릿 추가를 건너뜁니다
+if [ "$COMMIT_SOURCE" = "merge" ]; then
+  exit 0
+fi
+# 병합 중의 커밋인지 확인
+if echo "$DEFAULT_COMMIT_MSG" | grep -qiE "^(merge|병합)"; then
+  exit 0
+fi
+TEMPLATE="# 주의사항
+# [제목-내용-참조] 사이에 빈 줄 개행 필수
+# 제목의 prefix와 내용 사이는 콜론(:)과 공백( ) 기입 필수
+# ==============================================
+# 예) feat: A기능 추가
+# 제목 (바로 아래줄에 작성 후 개행 유지)
+# ==============================================
+# 예) - 기능1 추가
+# 내용 (바로 아래줄에 작성 후 개행 유지)
+# ==============================================
+# 예) refs: ISSUE-9999
+# 참조 (자동 작성)
+refs: ISSUE
+# ==============================================
+# =============== 커밋 유형 ====================
+# feat       | 새로운 기능 추가
+# fix        | 버그 수정
+# !hotfix    | 긴급 버그 수정
+# design     | UI 디자인 수정
+# style      | 코드 포맷팅같은 코드의 로직 수정이 없는 경우
+# refactor   | 코드 리팩토링
+# comment    | 필요한 주석 추가 및 변경
+# test       | 테스트 코드
+# docs       | 문서 수정
+# rename     | 파일/폴더명을 수정하거나 경로이동 작업만 한 경우
+# remove     | 파일을 삭제하는 작업만 한 경우
+# chore      | 빌드/패키지 관련 수정
+# ci         | CI 설정 파일 수정
+# build      | 빌드 파일 수정
+# pref       | 성능 개선
+# =============================================="
+FINAL_TEMPLATE=$(echo "$TEMPLATE" | sed "s/ISSUE/$ISSUE_TICKET/g")
+echo -e "$FINAL_TEMPLATE\n$DEFAULT_COMMIT_MSG" > $COMMIT_EDITMSG_FILE_PATH
+has_hook_script prepare-commit-msg || exit 0
+export PATH="$PATH:/c/Program Files/nodejs"
+export GIT_PARAMS="$*"
+node "./node_modules/yorkie/src/runner.js" prepare-commit-msg || {
+  echo
+  echo "prepare-commit-msg hook failed (cannot be bypassed with --no-verify due to Git specs)"
+  exit 1
+}
