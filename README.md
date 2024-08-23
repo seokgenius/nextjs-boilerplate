@@ -34,6 +34,12 @@ npm run prettier
 
 - Git-hook 제어(git commit 시 실행): husky
 
+- 프로세스 관리: pm2
+
 ## TODO
 
-- 커스텀 스타일링: styled-component / scss
+- 스타일링: styled-component or shadcn
+
+- CI/CD: Jenkins
+
+- 무중단 배포: nginx + docker

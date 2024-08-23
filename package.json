@@ -18,7 +18,9 @@
     "lint": "next lint",
     "lint:fix": "eslint --cache --fix",
     "prettier": "prettier --write src",
-    "commitlint": "commitlint -e"
+    "commitlint": "commitlint -e",
+    "pm2": "pm2 start ecosystem.config.cjs --only local",
+    "pm2:prod": "pm2 restart ecosystem.config.cjs --only prod"
   },
   "husky": {
     "hooks": {
@@ -62,6 +64,7 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "husky": "^9.1.4",
     "lint-staged": "^15.2.9",
+    "pm2": "^5.4.2",
     "postcss": "^8",
     "prettier": "^3.3.3",
     "tailwindcss": "^3.4.1",
