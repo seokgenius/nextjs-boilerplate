@@ -41,3 +41,7 @@ npm run prettier
 - CI/CD: Jenkins
 
 - 무중단 배포: nginx + docker
+
+- 로깅: winston
+
+- monorepo: yarn berry
