@@ -28,15 +28,13 @@ npm run prettier
 
 - 상태 관리: zustand
 
-- 스타일링: tailwindcss
+- 스타일링: tailwindcss + shadcn/ui
 
 - 코드 검사: eslint(airbnb) + prettier
 
 - Git-hook 제어(git commit 시 실행): husky
 
 - 프로세스 관리: pm2
-
-- 스타일링: shadcn/ui
 
 ## TODO
 
