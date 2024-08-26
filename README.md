@@ -36,9 +36,9 @@ npm run prettier
 
 - 프로세스 관리: pm2
 
-## TODO
+- 스타일링: shadcn/ui
 
-- 스타일링: styled-component or shadcn
+## TODO
 
 - CI/CD: Jenkins
 

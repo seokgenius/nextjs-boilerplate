@@ -1,6 +1,7 @@
 'use client';
 
 import { useCounterStore } from '@/providers/counter-store-provider';
+import { Button } from '@/components/ui/button';
 
 export default function HomePage() {
   const { count, incrementCount, decrementCount } = useCounterStore(
@@ -11,12 +12,8 @@ export default function HomePage() {
     <div>
       Count: {count}
       <hr />
-      <button type="button" onClick={() => incrementCount()}>
-        Increment Count
-      </button>
-      <button type="button" onClick={() => decrementCount()}>
-        Decrement Count
-      </button>
+      <Button onClick={() => incrementCount()}>Increment Count</Button>
+      <Button onClick={() => decrementCount()}>Decrement Count</Button>
     </div>
   );
 }
