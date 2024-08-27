@@ -36,11 +36,9 @@ npm run prettier
 
 - 프로세스 관리: pm2
 
+- CI/CD: Github action
+
 ## TODO
-
-- CI/CD: Jenkins
-
-- 무중단 배포: nginx + docker
 
 - 로깅: winston
 
