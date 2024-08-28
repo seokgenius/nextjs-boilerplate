@@ -28,7 +28,7 @@ npm run prettier
 
 - 상태 관리: zustand
 
-- 스타일링: tailwindcss + shadcn/ui
+- 스타일링: tailwindcss + shadcn/ui + scss
 
 - 코드 검사: eslint(airbnb) + prettier
 
@@ -37,6 +37,8 @@ npm run prettier
 - 프로세스 관리: pm2
 
 - CI/CD: Github action
+
+- Testing: Jest
 
 ## TODO
 
