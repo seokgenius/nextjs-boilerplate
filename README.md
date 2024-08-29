@@ -40,8 +40,8 @@ npm run prettier
 
 - Testing: Jest
 
-## TODO
-
 - 로깅: winston
+
+## TODO
 
 - monorepo: yarn berry
