@@ -24,7 +24,7 @@ const logDir = `${process.cwd()}/logs`;
 
 const combineFormat = combine(
   timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-  label({ label: 'Front Store' }),
+  label({ label: 'nextjs-boilerplate' }),
   errors({ stack: true }),
   prettyPrint(),
   splat(),
